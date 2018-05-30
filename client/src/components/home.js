@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-// import { Redirect } from 'react-router-dom'
 import './home.css';
 import axios from 'axios';
 import file from "../products.json"
 
-const db1 = JSON.stringify(file);
-let db = JSON.parse(db1);
 
 class home extends Component {
   constructor(props) {
     super();
     this.state = {
       db: [{}],
+      dbOriginal:[{}],
       categories: [],
       brands: []
     }
@@ -21,34 +19,38 @@ class home extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
+  
   componentDidMount() {
-    // axios.get(`http://localhost:8080/viewStores`)
-    // .then(res => {
-    //  db = res.data;
-    this.state.db = db;
+    axios.get(`http://localhost:8080/viewStores`)
+    .then(res => {
+        this.state.db = res.data;
+        this.state.dbOriginal=res.data;
+        this.setState();
+  }).then(_=>{
 
-    // })
     let tmp1 = this.state.categories
-    for (let i = 0; i < db.length; i++) {
-      if (!(tmp1.includes(this.state.db[i].category.name))) {
-        tmp1.push(this.state.db[i].category.name)
+    for (let i = 0; i < this.state.dbOriginal.length; i++) {
+      if (!(tmp1.includes(this.state.dbOriginal[i].category.name))) {
+        tmp1.push(this.state.dbOriginal[i].category.name)
       }
     }
 
     let tmp2 = this.state.brands
-    for (let i = 0; i < db.length; i++) {
-      if (!(tmp2.includes(this.state.db[i].brand))) {
-        tmp2.push(this.state.db[i].brand)
+    for (let i = 0; i < this.state.dbOriginal.length; i++) {
+      if (!(tmp2.includes(this.state.dbOriginal[i].brand))) {
+        tmp2.push(this.state.dbOriginal[i].brand)
       }
     }
     this.setState({ categories: tmp1, brands: tmp2 });
 
-  }
+  })}
+
+
   handleBrandSelect(item, e) {
     let tmp = []
-    for (let i = 0; i < db.length; i++) {
-      if (db[i].brand.toLowerCase() === item.toLowerCase()) {
-        tmp.push(db[i]);
+    for (let i = 0; i < this.state.dbOriginal.length; i++) {
+      if (this.state.dbOriginal[i].brand.toLowerCase() === item.toLowerCase()) {
+        tmp.push(this.state.dbOriginal[i]);
       }
     }
     this.setState({ db: tmp });
@@ -56,17 +58,16 @@ class home extends Component {
 
   handleCategorySelect(item, e) {
     let tmp = []
-    for (let i = 0; i < db.length; i++) {
-      if (db[i].category.name.toLowerCase() === item.toLowerCase()) {
-        tmp.push(db[i]);
+    for (let i = 0; i < this.state.dbOriginal.length; i++) {
+      if (this.state.dbOriginal[i].category.name.toLowerCase() === item.toLowerCase()) {
+        tmp.push(this.state.dbOriginal[i]);
       }
     }
     this.setState({ db: tmp });
-
   }
 
   handleSearch(value) {
-    let newDB = db.filter((val) => {
+    let newDB = this.state.dbOriginal.filter((val) => {
       return ((val.name.toLowerCase()).includes(value.toLowerCase()) || (val.brand.toLowerCase()).includes(value.toLowerCase()) 
               || (val.category.name.toLowerCase()).includes(value.toLowerCase()))
     })
@@ -75,6 +76,8 @@ class home extends Component {
   }
 
   render() {
+
+
 
     let products = this.state.db.map((item, i) => {
       return (
