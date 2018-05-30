@@ -1,0 +1,61 @@
+{
+    "questions": [
+        {
+            "question": "What type/brand of Insulin do you prefer?",
+            "type": "brands"
+        },
+        {
+            "question": "How many insulin units do you take DAILY?",
+            "type": "units"
+        },
+        {
+            "question": "What are the medications prescribed for you?",
+            "type": "medications"
+        },
+        {
+            "question": "How many pill do you need daily from Glucophage?",
+            "type": "units"
+        }
+    ],
+    "brands": [
+        "Lispro",
+        "Aspart",
+        "Glulisine",
+        "Regular Novolin",
+        "Humulin 70/30",
+        "Novolin 70/30",
+        "Insulin glargine"
+    ],
+    "medications": [
+        "Glucophage",
+        "Glumetza",
+        "Sulfonylureas",
+        "Thiazolidinediones",
+        "DPP-4 inhibitors",
+        "Meglitinides"
+    ],
+    "plans": [
+        {
+            "duration": "3 Months",
+            "price": "20 $",
+            "lispro": true,
+            "glucophage": true,
+            "xyz": false,
+            "lmn":false
+        }, {
+            "duration": "6 Months",
+            "price": "18 $",
+            "lispro": true,
+            "glucophage": true,
+            "xyz": true,
+            "lmn":false
+        }, {
+            "duration": "Annually",
+            "price": "15 $",
+            "lispro": true,
+            "glucophage": true,
+            "xyz": true,
+            "lmn":true
+        }
+    ]
+}
