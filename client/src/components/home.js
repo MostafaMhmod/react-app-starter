@@ -9,7 +9,7 @@ class home extends Component {
     super();
     this.state = {
       db: [{}],
-      dbOriginal:[{}],
+      dbOriginal: [{}],
       categories: [],
       brands: []
     }
@@ -19,31 +19,32 @@ class home extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  
+
   componentDidMount() {
     axios.get(`http://localhost:8080/viewStores`)
-    .then(res => {
+      .then(res => {
         this.state.db = res.data;
-        this.state.dbOriginal=res.data;
+        this.state.dbOriginal = res.data;
         this.setState();
-  }).then(_=>{
+      }).then(_ => {
 
-    let tmp1 = this.state.categories
-    for (let i = 0; i < this.state.dbOriginal.length; i++) {
-      if (!(tmp1.includes(this.state.dbOriginal[i].category.name))) {
-        tmp1.push(this.state.dbOriginal[i].category.name)
-      }
-    }
+        let tmp1 = this.state.categories
+        for (let i = 0; i < this.state.dbOriginal.length; i++) {
+          if (!(tmp1.includes(this.state.dbOriginal[i].category.name))) {
+            tmp1.push(this.state.dbOriginal[i].category.name)
+          }
+        }
 
-    let tmp2 = this.state.brands
-    for (let i = 0; i < this.state.dbOriginal.length; i++) {
-      if (!(tmp2.includes(this.state.dbOriginal[i].brand))) {
-        tmp2.push(this.state.dbOriginal[i].brand)
-      }
-    }
-    this.setState({ categories: tmp1, brands: tmp2 });
+        let tmp2 = this.state.brands
+        for (let i = 0; i < this.state.dbOriginal.length; i++) {
+          if (!(tmp2.includes(this.state.dbOriginal[i].brand))) {
+            tmp2.push(this.state.dbOriginal[i].brand)
+          }
+        }
+        this.setState({ categories: tmp1, brands: tmp2 });
 
-  })}
+      })
+  }
 
 
   handleBrandSelect(item, e) {
@@ -68,8 +69,8 @@ class home extends Component {
 
   handleSearch(value) {
     let newDB = this.state.dbOriginal.filter((val) => {
-      return ((val.name.toLowerCase()).includes(value.toLowerCase()) || (val.brand.toLowerCase()).includes(value.toLowerCase()) 
-              || (val.category.name.toLowerCase()).includes(value.toLowerCase()))
+      return ((val.name.toLowerCase()).includes(value.toLowerCase()) || (val.brand.toLowerCase()).includes(value.toLowerCase())
+        || (val.category.name.toLowerCase()).includes(value.toLowerCase()))
     })
     this.setState({ db: newDB });
 
